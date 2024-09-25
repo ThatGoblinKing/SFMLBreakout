@@ -13,7 +13,13 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp)
+add_executable(main src/main.cpp
+        src/game-utils/ball.cpp
+        src/game-utils/ball.h
+        src/game-utils/brick.cpp
+        src/game-utils/brick.h
+        src/game-utils/paddle.cpp
+        src/game-utils/paddle.h)
 target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_17)
 

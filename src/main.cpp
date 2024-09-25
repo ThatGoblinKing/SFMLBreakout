@@ -1,8 +1,11 @@
 #include <SFML/Graphics.hpp>
+#include "game-utils/Ball.h"
+#include "game-utils/Brick.h"
+#include "game-utils/Paddle.h"
 
 int main()
 {
-    auto window = sf::RenderWindow{ { 1920u, 1080u }, "CMake SFML Project" };
+    auto window = sf::RenderWindow{ sf::VideoMode(800,600), "Breakout" };
     window.setFramerateLimit(144);
 
     while (window.isOpen())
