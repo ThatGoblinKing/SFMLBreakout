@@ -4,8 +4,13 @@
 #include "Paddle.h"
 
 class Ball {
- void draw(sf::RenderWindow &window);
- void move(sf::RenderWindow &window);
- bool brickCollision(Brick&);
- bool paddleCollision(Paddle&);
+    sf::CircleShape shape;
+    float radius, xPos, yPos, xVel = 0, yVel = -5;
+public:
+    Ball();
+    Ball(float rad, float x, float y);
+    void draw(sf::RenderWindow &window) const;
+    void move();
+    bool brickCollision(Brick& brick);
+    bool paddleCollision(Paddle& paddle);
 };

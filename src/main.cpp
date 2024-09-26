@@ -7,6 +7,11 @@ int main()
 {
     auto window = sf::RenderWindow{ sf::VideoMode(800,600), "Breakout" };
     window.setFramerateLimit(144);
+    Brick bricks[3];
+    Ball ball(10, 100, 300);
+    for(int i = 0; i < 3; i++) {
+        bricks[i] = Brick(100 + (60*i), 100, 50, 20);
+    }
 
     while (window.isOpen())
     {
@@ -17,8 +22,13 @@ int main()
                 window.close();
             }
         }
-
+        ball.move();
         window.clear();
+        for (Brick &brick : bricks) {
+            brick.draw(window);
+            ball.brickCollision(brick);
+        }
+        ball.draw(window);
         window.display();
     }
 }
