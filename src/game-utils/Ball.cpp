@@ -1,5 +1,6 @@
 #include "Ball.h"
 #include "Brick.h"
+#include <iostream>
 
 Ball::Ball() {
     radius = 0;
@@ -13,8 +14,11 @@ Ball::Ball(const float rad, const float x, const float y) {
     radius = rad;
     xPos = x;
     yPos = y;
+    xVel = -1;
+    yVel = -3;
 
     shape.setRadius(radius);
+    shape.setOrigin(radius,radius);
     shape.setPosition(xPos, yPos);
     shape.setFillColor(sf::Color::White);
 }
@@ -33,11 +37,30 @@ bool Ball::brickCollision(Brick& brick) {
         }
 }
 
-bool Ball::paddleCollision(Paddle& paddle) {
+bool Ball::paddleCollision(const Paddle& paddle) {
+    if (xPos + radius > paddle.getLeftPos() &&
+        xPos - radius < paddle.getRightPos() &&
+        yPos + radius > paddle.getTopPos() &&
+        yPos - radius < paddle.getBottomPos()) {
+        yPos = paddle.getTopPos() - radius;
+        yVel *= -1;
+        return true;
+    }
     return false;
 }
 
 void Ball::move() {
+    if (xPos + radius + xVel > SCREEN_WIDTH) {
+        xVel *= -1;
+        xPos = SCREEN_WIDTH - radius;
+    }
+    else if (xPos - radius + xVel < 0) {
+        xVel *= -1;
+    }
+    if (yPos - radius + yVel < 0) {
+        yVel *= -1;
+        yPos = radius;
+    }
     xPos += xVel;
     yPos += yVel;
     shape.setPosition(xPos, yPos);

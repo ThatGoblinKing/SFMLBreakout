@@ -10,8 +10,10 @@ int main()
     Brick bricks[3];
     Ball ball(10, 100, 300);
     for(int i = 0; i < 3; i++) {
-        bricks[i] = Brick(100 + (60*i), 100, 50, 20);
+        bricks[i] = Brick(50, 20, 100 + (60*i), 100);
     }
+
+    Paddle paddle(100, 20, 60, 400);
 
     while (window.isOpen())
     {
@@ -22,13 +24,22 @@ int main()
                 window.close();
             }
         }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            paddle.moveLeft();
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            paddle.moveRight();
+        }
         ball.move();
         window.clear();
         for (Brick &brick : bricks) {
             brick.draw(window);
-            ball.brickCollision(brick);
+            if (ball.brickCollision(brick)) {
+                break; //Make sure only 1 brick hit per frame
+            }
         }
+        ball.paddleCollision(paddle);
         ball.draw(window);
+        paddle.draw(window);
         window.display();
     }
 }
