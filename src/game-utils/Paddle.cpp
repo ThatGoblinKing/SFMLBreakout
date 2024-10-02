@@ -18,13 +18,17 @@ Paddle::Paddle(const float w, const float h, const float x, const float y) {
 }
 
 void Paddle::moveLeft() {
-    xPos -= PADDLE_SPEED;
-    shape.move(-PADDLE_SPEED, 0);
+    if (xPos >= 0) {
+        xPos -= PADDLE_SPEED;
+        shape.move(-PADDLE_SPEED, 0);
+    }
 }
 
 void Paddle::moveRight() {
-    xPos += PADDLE_SPEED;
-    shape.move(PADDLE_SPEED, 0);
+    if (getRightPos() <= SCREEN_WIDTH) {
+        xPos += PADDLE_SPEED;
+        shape.move(PADDLE_SPEED, 0);
+    }
 }
 
 void Paddle::draw(sf::RenderWindow &window) const {

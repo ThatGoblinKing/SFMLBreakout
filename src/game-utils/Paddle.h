@@ -3,7 +3,7 @@
 
 class Paddle {
     private:
-        float width, height, xPos, yPos;
+        float width, height, xPos, yPos, SCREEN_WIDTH = 800;
         sf::RectangleShape shape;
     public:
     const float PADDLE_SPEED = 5;

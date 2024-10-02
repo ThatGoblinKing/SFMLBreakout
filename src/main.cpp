@@ -1,16 +1,24 @@
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 #include "game-utils/Ball.h"
 #include "game-utils/Brick.h"
 #include "game-utils/Paddle.h"
 
 int main()
 {
-    auto window = sf::RenderWindow{ sf::VideoMode(800,600), "Breakout" };
+    sf::Texture ballTexture;
+    ballTexture.loadFromFile("INSERT HAMPTER ABSOLUTE PATH HERE.");
+
+    //Sound not working bc of importing issues :(
+    const int SCREEN_WIDTH = 800;
+    auto window = sf::RenderWindow{ sf::VideoMode(SCREEN_WIDTH,600), "Breakout" };
     window.setFramerateLimit(144);
-    Brick bricks[3];
-    Ball ball(10, 100, 300);
-    for(int i = 0; i < 3; i++) {
-        bricks[i] = Brick(50, 20, 100 + (60*i), 100);
+    Ball ball(60, 100, 300 ,ballTexture);
+    const int ROWS = 3, COLUMNS = 12, GAP = 10, HEIGHT = 20;
+    Brick bricks[ROWS * COLUMNS];
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLUMNS; j++) {
+            bricks[j + (COLUMNS * i)] = Brick(SCREEN_WIDTH / COLUMNS - GAP, HEIGHT, GAP + (SCREEN_WIDTH / COLUMNS) * j, (HEIGHT + GAP) * i);
+        }
     }
 
     Paddle paddle(100, 20, 60, 400);

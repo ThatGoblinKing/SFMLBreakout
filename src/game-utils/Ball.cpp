@@ -10,7 +10,7 @@ Ball::Ball() {
     yVel = 0;
 }
 
-Ball::Ball(const float rad, const float x, const float y) {
+Ball::Ball(const float rad, const float x, const float y, const sf::Texture& texture){
     radius = rad;
     xPos = x;
     yPos = y;
@@ -21,6 +21,9 @@ Ball::Ball(const float rad, const float x, const float y) {
     shape.setOrigin(radius,radius);
     shape.setPosition(xPos, yPos);
     shape.setFillColor(sf::Color::White);
+    sprite.setTexture(texture);
+    sprite.setScale(((radius * 2)/HAMPTER_SIZE),  ((radius * 2)/HAMPTER_SIZE));
+
 }
 
 bool Ball::brickCollision(Brick& brick) {
@@ -64,10 +67,12 @@ void Ball::move() {
     xPos += xVel;
     yPos += yVel;
     shape.setPosition(xPos, yPos);
+    sprite.setPosition(shape.getPosition().x - radius, shape.getPosition().y - radius);
 }
 
 void Ball::draw(sf::RenderWindow &window) const {
     window.draw(shape);
+    window.draw(sprite);
 }
 
 
